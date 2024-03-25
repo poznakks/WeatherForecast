@@ -30,7 +30,7 @@ final class WeatherViewController: UIViewController {
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 40)
+        label.font = .systemFont(ofSize: 40, weight: .medium, design: .rounded)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ final class WeatherViewController: UIViewController {
     private lazy var currentTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 70)
+        label.font = .systemFont(ofSize: 70, weight: .medium, design: .rounded)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
@@ -51,7 +51,7 @@ final class WeatherViewController: UIViewController {
     private lazy var feelsLikeTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 25)
+        label.font = .systemFont(ofSize: 25, weight: .medium, design: .rounded)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
@@ -61,7 +61,7 @@ final class WeatherViewController: UIViewController {
     private lazy var currentDescriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 25)
+        label.font = .systemFont(ofSize: 25, weight: .medium, design: .rounded)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
@@ -79,6 +79,18 @@ final class WeatherViewController: UIViewController {
         contentView.addSubview(tableView)
         return tableView
     }()
+
+    private lazy var sunriseView = WeatherParameterView()
+    private lazy var sunsetView = WeatherParameterView()
+
+    private lazy var pressureView = WeatherParameterView()
+    private lazy var humidityView = WeatherParameterView()
+
+    private lazy var cloudsView = WeatherParameterView()
+    private lazy var visibilityView = WeatherParameterView()
+
+    private lazy var windSpeedView = WeatherParameterView()
+    private lazy var windDirectionView = WeatherParameterView()
 
     init(viewModel: WeatherViewModel) {
         self.viewModel = viewModel
@@ -125,10 +137,50 @@ final class WeatherViewController: UIViewController {
 
         let daily = weatherInfo.daily
         dailyForecastTableView.setDailyForecasts(daily)
+
+        sunriseView.setParameter(
+            name: "Sunrise",
+            value: weatherInfo.current.time(of: weatherInfo.current.sunrise)
+        )
+
+        sunsetView.setParameter(
+            name: "Sunset",
+            value: weatherInfo.current.time(of: weatherInfo.current.sunset)
+        )
+
+        pressureView.setParameter(
+            name: "Pressure",
+            value: "\(weatherInfo.current.pressure) hPa"
+        )
+
+        humidityView.setParameter(
+            name: "Humidity",
+            value: "\(weatherInfo.current.humidity)%"
+        )
+
+        cloudsView.setParameter(
+            name: "Clouds",
+            value: "\(weatherInfo.current.clouds)%"
+        )
+
+        visibilityView.setParameter(
+            name: "Visibility",
+            value: "\(weatherInfo.current.visibility) m"
+        )
+
+        windSpeedView.setParameter(
+            name: "Wind Speed",
+            value: "\(Int(weatherInfo.current.windSpeed)) m/s"
+        )
+
+        windDirectionView.setParameter(
+            name: "Wind direction",
+            value: "\(weatherInfo.current.windDeg) deg"
+        )
     }
 
     private func setupConstraints() {
-        NSLayoutConstraint.pinEdgesToSuperview(scrollView)
+        NSLayoutConstraint.pinEdgesToSuperviewSafeArea(scrollView)
 
         NSLayoutConstraint.pinEdgesToSuperview(contentView)
         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
@@ -145,85 +197,73 @@ final class WeatherViewController: UIViewController {
         NSLayoutConstraint.pinTop(currentDescriptionLabel, to: feelsLikeTempLabel, offset: 10)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(currentDescriptionLabel, edgeInset: 20)
 
-        NSLayoutConstraint.pinTop(hourlyForecastCollectionView, to: currentDescriptionLabel, offset: 30)
+        NSLayoutConstraint.pinTop(hourlyForecastCollectionView, to: currentDescriptionLabel, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(hourlyForecastCollectionView, edgeInset: 20)
         hourlyForecastCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        NSLayoutConstraint.pinTop(dailyForecastTableView, to: hourlyForecastCollectionView, offset: 30)
+        NSLayoutConstraint.pinTop(dailyForecastTableView, to: hourlyForecastCollectionView, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(dailyForecastTableView, edgeInset: 20)
-        NSLayoutConstraint.pinBottomToSuperView(dailyForecastTableView)
-    }
-}
 
-extension NSLayoutConstraint {
-    static func pinEdgesToSuperview(_ view: UIView, edgeInset: CGFloat = 0) {
-        guard let superview = view.superview else {
-            assertionFailure("View must have a superview to pin to")
-            return
-        }
+        let sunriseSunsetStack: UIStackView = {
+            let stack = UIStackView(arrangedSubviews: [sunriseView, sunsetView])
+            stack.axis = .horizontal
+            stack.spacing = 16
+            stack.distribution = .fillEqually
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(stack)
+            return stack
+        }()
 
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            view.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor),
-            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: edgeInset),
-            view.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -edgeInset),
-            view.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor)
-        ]
-        activate(constraints)
-    }
+        NSLayoutConstraint.pinTop(sunriseSunsetStack, to: dailyForecastTableView, offset: 16)
+        NSLayoutConstraint.pinLeadingTrailingToSuperview(sunriseSunsetStack, edgeInset: 20)
+        sunriseView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        sunsetView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-    static func pinTopToSuperView(_ view: UIView, offset: CGFloat = 0) {
-        guard let superview = view.superview else {
-            assertionFailure("View must have a superview to pin to")
-            return
-        }
+        let pressureHumidityStack: UIStackView = {
+            let stack = UIStackView(arrangedSubviews: [pressureView, humidityView])
+            stack.axis = .horizontal
+            stack.spacing = 16
+            stack.distribution = .fillEqually
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(stack)
+            return stack
+        }()
 
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            view.topAnchor.constraint(equalTo: superview.topAnchor, constant: offset)
-        ]
-        activate(constraints)
-    }
+        NSLayoutConstraint.pinTop(pressureHumidityStack, to: sunriseSunsetStack, offset: 16)
+        NSLayoutConstraint.pinLeadingTrailingToSuperview(pressureHumidityStack, edgeInset: 20)
+        pressureView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        humidityView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-    static func pinBottomToSuperView(_ view: UIView, offset: CGFloat = 0) {
-        guard let superview = view.superview else {
-            assertionFailure("View must have a superview to pin to")
-            return
-        }
+        let cloudsVisibilityStack: UIStackView = {
+            let stack = UIStackView(arrangedSubviews: [cloudsView, visibilityView])
+            stack.axis = .horizontal
+            stack.spacing = 16
+            stack.distribution = .fillEqually
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(stack)
+            return stack
+        }()
 
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            view.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: offset)
-        ]
-        activate(constraints)
-    }
+        NSLayoutConstraint.pinTop(cloudsVisibilityStack, to: pressureHumidityStack, offset: 16)
+        NSLayoutConstraint.pinLeadingTrailingToSuperview(cloudsVisibilityStack, edgeInset: 20)
+        cloudsView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        visibilityView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-    static func pinLeadingTrailingToSuperview(_ view: UIView, edgeInset: CGFloat = 0) {
-        guard let superview = view.superview else {
-            assertionFailure("View must have a superview to pin to")
-            return
-        }
+        let windStack: UIStackView = {
+            let stack = UIStackView(arrangedSubviews: [windSpeedView, windDirectionView])
+            stack.axis = .horizontal
+            stack.spacing = 16
+            stack.distribution = .fillEqually
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(stack)
+            return stack
+        }()
 
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: edgeInset),
-            view.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -edgeInset)
-        ]
-        activate(constraints)
-    }
+        NSLayoutConstraint.pinTop(windStack, to: cloudsVisibilityStack, offset: 16)
+        NSLayoutConstraint.pinLeadingTrailingToSuperview(windStack, edgeInset: 20)
+        windSpeedView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        windDirectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-    static func pinTop(_ view: UIView, to toView: UIView, offset: CGFloat = 0) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            view.topAnchor.constraint(equalTo: toView.bottomAnchor, constant: offset)
-        ]
-        activate(constraints)
-    }
-}
-
-extension Array {
-    func prefix(_ maxLength: Int) -> [Element] {
-        let endIndex = Swift.min(maxLength, count)
-        return Array(self[..<endIndex])
+        NSLayoutConstraint.pinBottomToSuperView(windStack, offset: -30)
     }
 }

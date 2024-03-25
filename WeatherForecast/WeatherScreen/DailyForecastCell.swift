@@ -17,6 +17,7 @@ final class DailyForecastCell: UITableViewCell {
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .center
         return label
     }()
@@ -30,6 +31,7 @@ final class DailyForecastCell: UITableViewCell {
     private lazy var minTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = .systemFont(ofSize: 20, weight: .medium, design: .rounded)
         label.textAlignment = .center
         return label
     }()
@@ -37,16 +39,25 @@ final class DailyForecastCell: UITableViewCell {
     private lazy var maxTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = .systemFont(ofSize: 20, weight: .medium, design: .rounded)
         label.textAlignment = .center
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .systemMint
+        backgroundColor = .systemCyan
+
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundView = blurEffectView
+
         setupConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

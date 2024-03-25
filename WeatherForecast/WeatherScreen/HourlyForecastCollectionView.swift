@@ -18,6 +18,7 @@ final class HourlyForecastCollectionView: UICollectionView {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -29,13 +30,19 @@ final class HourlyForecastCollectionView: UICollectionView {
 
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemMint
+        backgroundColor = .systemCyan
         layer.cornerRadius = 16
         layer.masksToBounds = true
         showsHorizontalScrollIndicator = false
         delegate = self
         dataSource = self
         register(HourlyForecastCell.self, forCellWithReuseIdentifier: HourlyForecastCell.identifier)
+
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundView = blurEffectView
     }
 }
 

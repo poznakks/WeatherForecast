@@ -25,11 +25,19 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let weatherVC = WeatherViewController(viewModel: weatherViewModel)
         weatherVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
 
-//        let searchVC = UINavigationController(rootViewController: SearchViewController())
-//        searchVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        let searchViewModel = SearchViewModel()
+        let searchVC = SearchViewController(viewModel: searchViewModel)
+        searchVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
 
-        tabBarController.viewControllers = [weatherVC]
-        tabBarController.tabBar.backgroundColor = .systemBackground
+        tabBarController.viewControllers = [
+            weatherVC,
+            searchVC
+        ]
+
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        tabBarController.tabBar.standardAppearance = tabBarAppearance
+        tabBarController.tabBar.scrollEdgeAppearance = tabBarAppearance
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

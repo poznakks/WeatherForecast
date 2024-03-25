@@ -35,6 +35,14 @@
 		2127F7FD2BB1D022004D6495 /* HourlyForecastCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F7F92BB1D022004D6495 /* HourlyForecastCollectionView.swift */; };
 		2127F7FF2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F7FE2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift */; };
 		2127F8012BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8002BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift */; };
+		2127F8042BB1FC17004D6495 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8032BB1FC17004D6495 /* SearchViewController.swift */; };
+		2127F8062BB1FD5A004D6495 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8052BB1FD5A004D6495 /* SearchViewModel.swift */; };
+		2127F8082BB1FDBC004D6495 /* SearchResultsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8072BB1FDBC004D6495 /* SearchResultsTableView.swift */; };
+		2127F80A2BB20078004D6495 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8092BB20078004D6495 /* SearchTextField.swift */; };
+		2127F80C2BB213D7004D6495 /* WeatherParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F80B2BB213D7004D6495 /* WeatherParameterView.swift */; };
+		2127F80E2BB214E0004D6495 /* NSLayoutContraint+pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */; };
+		2127F8102BB21503004D6495 /* Array+prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F80F2BB21503004D6495 /* Array+prefix.swift */; };
+		2127F8122BB23584004D6495 /* UIFont+design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8112BB23584004D6495 /* UIFont+design.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +76,14 @@
 		2127F7F92BB1D022004D6495 /* HourlyForecastCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyForecastCollectionView.swift; sourceTree = "<group>"; };
 		2127F7FE2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastCellViewModel.swift; sourceTree = "<group>"; };
 		2127F8002BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastCellViewModel.swift; sourceTree = "<group>"; };
+		2127F8032BB1FC17004D6495 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2127F8052BB1FD5A004D6495 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		2127F8072BB1FDBC004D6495 /* SearchResultsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableView.swift; sourceTree = "<group>"; };
+		2127F8092BB20078004D6495 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		2127F80B2BB213D7004D6495 /* WeatherParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParameterView.swift; sourceTree = "<group>"; };
+		2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutContraint+pin.swift"; sourceTree = "<group>"; };
+		2127F80F2BB21503004D6495 /* Array+prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+prefix.swift"; sourceTree = "<group>"; };
+		2127F8112BB23584004D6495 /* UIFont+design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+design.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +116,7 @@
 		2127F7B32BB1BE73004D6495 /* WeatherForecast */ = {
 			isa = PBXGroup;
 			children = (
+				2127F8022BB1FC02004D6495 /* SearchScreen */,
 				2127F7F52BB1CFCF004D6495 /* WeatherScreen */,
 				2127F7C92BB1C08C004D6495 /* App */,
 				2127F7CF2BB1CAB6004D6495 /* Networking */,
@@ -107,6 +124,9 @@
 				2127F7CE2BB1CA97004D6495 /* Location */,
 				2127F7CA2BB1C0A1004D6495 /* Resources */,
 				2127F7CB2BB1C0AC004D6495 /* SupportingFiles */,
+				2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */,
+				2127F80F2BB21503004D6495 /* Array+prefix.swift */,
+				2127F8112BB23584004D6495 /* UIFont+design.swift */,
 			);
 			path = WeatherForecast;
 			sourceTree = "<group>";
@@ -209,8 +229,20 @@
 				2127F7B82BB1BE73004D6495 /* WeatherViewController.swift */,
 				2127F7FE2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift */,
 				2127F8002BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift */,
+				2127F80B2BB213D7004D6495 /* WeatherParameterView.swift */,
 			);
 			path = WeatherScreen;
+			sourceTree = "<group>";
+		};
+		2127F8022BB1FC02004D6495 /* SearchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2127F8032BB1FC17004D6495 /* SearchViewController.swift */,
+				2127F8052BB1FD5A004D6495 /* SearchViewModel.swift */,
+				2127F8072BB1FDBC004D6495 /* SearchResultsTableView.swift */,
+				2127F8092BB20078004D6495 /* SearchTextField.swift */,
+			);
+			path = SearchScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +342,9 @@
 				2127F8012BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift in Sources */,
 				2127F7E02BB1CB5D004D6495 /* DecodableNetworkResponseConverter.swift in Sources */,
 				2127F7CD2BB1C1FD004D6495 /* LocationManager.swift in Sources */,
+				2127F8042BB1FC17004D6495 /* SearchViewController.swift in Sources */,
+				2127F8082BB1FDBC004D6495 /* SearchResultsTableView.swift in Sources */,
+				2127F80A2BB20078004D6495 /* SearchTextField.swift in Sources */,
 				2127F7D92BB1CB11004D6495 /* NetworkError.swift in Sources */,
 				2127F7B92BB1BE73004D6495 /* WeatherViewController.swift in Sources */,
 				2127F7D72BB1CB11004D6495 /* CachePolicy.swift in Sources */,
@@ -318,6 +353,7 @@
 				2127F7FB2BB1D022004D6495 /* DailyForecastCell.swift in Sources */,
 				2127F7EC2BB1CC74004D6495 /* WeatherIconRequest.swift in Sources */,
 				2127F7D62BB1CB11004D6495 /* HttpMethod.swift in Sources */,
+				2127F8122BB23584004D6495 /* UIFont+design.swift in Sources */,
 				2127F7EE2BB1CC74004D6495 /* WeatherResponse.swift in Sources */,
 				2127F7ED2BB1CC74004D6495 /* WeatherRequest.swift in Sources */,
 				2127F7E12BB1CB5D004D6495 /* ImageNetworkResponseConverter.swift in Sources */,
@@ -328,9 +364,13 @@
 				2127F7EB2BB1CC74004D6495 /* WeatherIconResponse.swift in Sources */,
 				2127F7E22BB1CB5D004D6495 /* NetworkResponseConverterOf.swift in Sources */,
 				2127F7FF2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift in Sources */,
+				2127F8062BB1FD5A004D6495 /* SearchViewModel.swift in Sources */,
+				2127F80E2BB214E0004D6495 /* NSLayoutContraint+pin.swift in Sources */,
 				2127F7B52BB1BE73004D6495 /* AppDelegate.swift in Sources */,
 				2127F7FA2BB1D022004D6495 /* HourlyForecastCell.swift in Sources */,
 				2127F7DA2BB1CB11004D6495 /* NetworkRequest.swift in Sources */,
+				2127F8102BB21503004D6495 /* Array+prefix.swift in Sources */,
+				2127F80C2BB213D7004D6495 /* WeatherParameterView.swift in Sources */,
 				2127F7E32BB1CB5D004D6495 /* NetworkResponseConverter.swift in Sources */,
 				2127F7B72BB1BE73004D6495 /* SceneDelegate.swift in Sources */,
 			);

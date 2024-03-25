@@ -26,6 +26,7 @@ final class DailyForecastTableView: UITableView {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,7 +38,7 @@ final class DailyForecastTableView: UITableView {
 
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemMint
+        backgroundColor = .systemCyan
         layer.cornerRadius = 16
         layer.masksToBounds = true
         isScrollEnabled = false
@@ -45,6 +46,12 @@ final class DailyForecastTableView: UITableView {
         dataSource = self
         delegate = self
         register(DailyForecastCell.self, forCellReuseIdentifier: DailyForecastCell.identifier)
+
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundView = blurEffectView
     }
 }
 
@@ -57,7 +64,7 @@ extension DailyForecastTableView: UITableViewDataSource {
         guard let cell = dequeueReusableCell(
             withIdentifier: DailyForecastCell.identifier,
             for: indexPath
-        ) as? DailyForecastCell else { return UITableViewCell() }
+        ) as? DailyForecastCell else { return DailyForecastCell() }
         let forecast = dailyForecasts[indexPath.row]
         let cellViewModel = DailyForecastCellViewModel(
             forecast: forecast,
@@ -70,6 +77,6 @@ extension DailyForecastTableView: UITableViewDataSource {
 
 extension DailyForecastTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
+        50
     }
 }

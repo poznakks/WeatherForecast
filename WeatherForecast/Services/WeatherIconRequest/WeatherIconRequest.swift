@@ -14,7 +14,7 @@ struct WeatherIconRequest: NetworkRequest {
     let path: String
     let httpMethod: HttpMethod = .GET
     let queryItems: [URLQueryItem]? = nil
-    let cachePolicy: CachePolicy = .noCache
+    let cachePolicy: CachePolicy = .unlimited
     let timeoutInterval: TimeInterval = 10
 
     init(iconName: String) {

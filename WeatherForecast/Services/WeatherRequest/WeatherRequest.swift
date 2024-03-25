@@ -15,7 +15,7 @@ struct WeatherRequest: NetworkRequest {
     let path: String = "/data/3.0/onecall"
     let httpMethod: HttpMethod = .GET
     let queryItems: [URLQueryItem]?
-    let cachePolicy: CachePolicy = .noCache
+    let cachePolicy: CachePolicy = .oneHour
     let timeoutInterval: TimeInterval = 10
 
     init(coordinate: CLLocationCoordinate2D) {

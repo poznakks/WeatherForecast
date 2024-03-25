@@ -20,8 +20,12 @@ final class WeatherViewModel: ObservableObject {
 
     private var cancellables: Set<AnyCancellable> = []
 
-    init() {
-        subscribeOnLocationManager()
+    init(coordinate: CLLocationCoordinate2D? = nil) {
+        if let coordinate {
+            getWeatherInfo(for: coordinate)
+        } else {
+            subscribeOnLocationManager()
+        }
     }
 
     private func getWeatherInfo(for coordinate: CLLocationCoordinate2D) {

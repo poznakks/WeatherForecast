@@ -20,13 +20,19 @@ struct WeatherResponse: Decodable {
 // MARK: - CurrentWeather
 struct CurrentWeather: Decodable {
     let dt: Date
-    let sunrise, sunset: Int?
+    let sunrise, sunset: Date
     let temp, feelsLike: Double
     let pressure, humidity: Int
     let clouds, visibility: Int
     let windSpeed: Double
     let windDeg: Int
     let weather: [Weather]
+
+    func time(of parameter: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: parameter)
+    }
 }
 
 // MARK: - HourlyWeather
