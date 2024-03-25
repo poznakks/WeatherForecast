@@ -56,7 +56,11 @@ extension HourlyForecastCollectionView: UICollectionViewDataSource {
             for: indexPath
         ) as? HourlyForecastCell else { return UICollectionViewCell() }
         let forecast = hourlyForecasts[indexPath.item]
-        cell.configure(with: forecast, isNow: indexPath.row == 0)
+        let viewModel = HourlyForecastCellViewModel(
+            forecast: forecast,
+            isNow: indexPath.row == 0
+        )
+        cell.configure(with: viewModel)
         return cell
     }
 }

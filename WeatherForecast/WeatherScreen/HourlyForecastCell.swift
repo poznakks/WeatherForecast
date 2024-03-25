@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class HourlyForecastCell: UICollectionViewCell {
 
     static let identifier = String(describing: HourlyForecastCell.self)
+
+    private var cancellables: Set<AnyCancellable> = []
 
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
@@ -49,13 +52,16 @@ final class HourlyForecastCell: UICollectionViewCell {
         tempLabel.text = nil
     }
 
-    func configure(with forecast: HourlyWeather, isNow: Bool) {
-        timeLabel.text = isNow ? "Now" : forecast.time
-        Task {
-            let icon = try await service.weatherIcon(iconName: forecast.weather.first!.icon)
-            iconImageView.image = icon
-        }
-        tempLabel.text = "\(Int(forecast.temp))º"
+    func configure(with viewModel: HourlyForecastCellViewModel) {
+        timeLabel.text = viewModel.time
+        tempLabel.text = viewModel.temp
+
+        viewModel.$icon
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] icon in
+                self?.iconImageView.image = icon
+            }
+            .store(in: &cancellables)
     }
 
     private func setupConstraints() {

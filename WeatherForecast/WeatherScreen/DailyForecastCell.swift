@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class DailyForecastCell: UITableViewCell {
 
     static let identifier = String(describing: DailyForecastCell.self)
+
+    private var cancellables: Set<AnyCancellable> = []
 
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
@@ -38,8 +41,6 @@ final class DailyForecastCell: UITableViewCell {
         return label
     }()
 
-    private let service: WeatherService = WeatherServiceImpl()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .systemMint
@@ -58,14 +59,18 @@ final class DailyForecastCell: UITableViewCell {
         maxTempLabel.text = nil
     }
 
-    func configure(with forecast: DailyWeather, isToday: Bool) {
-        dayLabel.text = isToday ? "Today" : forecast.day
-        Task {
-            let icon = try await service.weatherIcon(iconName: forecast.weather.first!.icon)
-            iconImageView.image = icon
-        }
-        minTempLabel.text = "\(Int(forecast.temp.min))°"
-        maxTempLabel.text = "\(Int(forecast.temp.max))°"
+    func configure(with viewModel: DailyForecastCellViewModel) {
+        dayLabel.text = viewModel.day
+        iconImageView.image = viewModel.icon
+        minTempLabel.text = viewModel.minTemp
+        maxTempLabel.text = viewModel.maxTemp
+
+        viewModel.$icon
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] icon in
+                self?.iconImageView.image = icon
+            }
+            .store(in: &cancellables)
     }
 
     private func setupConstraints() {

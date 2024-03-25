@@ -102,7 +102,6 @@ final class WeatherViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] city in
                 self?.cityLabel.text = city
-//                print(city)
             }
             .store(in: &cancellables)
 
@@ -110,7 +109,6 @@ final class WeatherViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] weatherInfo in
                 self?.updateWithWeatherInfo(weatherInfo)
-//                print(weatherInfo?.current.temp)
             }
             .store(in: &cancellables)
     }

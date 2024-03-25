@@ -59,7 +59,11 @@ extension DailyForecastTableView: UITableViewDataSource {
             for: indexPath
         ) as? DailyForecastCell else { return UITableViewCell() }
         let forecast = dailyForecasts[indexPath.row]
-        cell.configure(with: forecast, isToday: indexPath.row == 0)
+        let cellViewModel = DailyForecastCellViewModel(
+            forecast: forecast,
+            isToday: indexPath.row == 0
+        )
+        cell.configure(with: cellViewModel)
         return cell
     }
 }

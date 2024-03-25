@@ -12,8 +12,8 @@ import Combine
 @MainActor
 final class WeatherViewModel: ObservableObject {
 
-    @Published var city: String?
-    @Published var weatherInfo: WeatherResponse?
+    @Published private(set) var city: String?
+    @Published private(set) var weatherInfo: WeatherResponse?
 
     private let service: WeatherService = WeatherServiceImpl()
     private let locationManager = LocationManager()
