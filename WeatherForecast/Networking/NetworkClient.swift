@@ -70,8 +70,10 @@ final class NetworkClientImpl: NetworkClient {
             switch (error as? URLError)?.code {
             case .some(.notConnectedToInternet):
                 throw NetworkError.noInternetConnection
+
             case .some(.timedOut):
                 throw NetworkError.timeout
+
             default:
                 throw error
             }
@@ -90,8 +92,10 @@ final class NetworkClientImpl: NetworkClient {
         switch cachePolicy {
         case .noCache:
             expirationTimestamp = Date.distantPast.timeIntervalSince1970
+
         case .oneHour:
             expirationTimestamp = Date().timeIntervalSince1970 + cachePolicy.rawValue
+
         case .unlimited:
             expirationTimestamp = Date.distantFuture.timeIntervalSince1970
         }

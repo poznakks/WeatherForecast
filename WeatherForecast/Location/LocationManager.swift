@@ -9,10 +9,10 @@ import Foundation
 import CoreLocation
 import MapKit
 
-final class LocationManager: NSObject {
+final class LocationManager: NSObject, ObservableObject {
 
-    private(set) var currentUserCoordinate = CLLocationCoordinate2D()
-    private(set) var searchResults: [MKLocalSearchCompletion] = []
+    @Published private(set) var currentUserCoordinate: CLLocationCoordinate2D?
+    @Published private(set) var searchResults: [MKLocalSearchCompletion] = []
 
     private let locationManager = CLLocationManager()
     private let localSearchCompleter = MKLocalSearchCompleter()
@@ -25,9 +25,15 @@ final class LocationManager: NSObject {
 
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+
+    deinit {
+        locationManager.stopUpdatingLocation()
     }
 
     func getLocationByCoordinate(coordinate: CLLocationCoordinate2D) async -> String {
+        print("getLocationByCoordinate", coordinate)
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let placemarks = try? await geocoder.reverseGeocodeLocation(location)
 
@@ -55,6 +61,7 @@ extension LocationManager: CLLocationManagerDelegate {
     ) {
         if let coordinate = locations.first?.coordinate {
             currentUserCoordinate = coordinate
+            print(coordinate)
         }
     }
 }

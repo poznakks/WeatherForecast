@@ -9,7 +9,7 @@ import UIKit
 
 protocol NetworkRequest {
     associatedtype Response
-    
+
     var host: String { get }
     var path: String { get }
     var httpMethod: HttpMethod { get }

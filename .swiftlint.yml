@@ -50,3 +50,7 @@ analyzer_rules:
 private_over_fileprivate:
   validate_extensions: true
   severity: error
+
+identifier_name:
+    min_length:
+        warning: 2

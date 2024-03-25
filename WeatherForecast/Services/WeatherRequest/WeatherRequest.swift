@@ -24,7 +24,7 @@ struct WeatherRequest: NetworkRequest {
             URLQueryItem(name: "lon", value: String(coordinate.longitude)),
             URLQueryItem(name: "appid", value: "166d2e67f7150d578498870ed9dd83c8"),
             URLQueryItem(name: "exclude", value: "minutely,alerts"),
-            URLQueryItem(name: "units", value: "metric"),
+            URLQueryItem(name: "units", value: "metric")
         ]
         self.queryItems = queryItems
     }
