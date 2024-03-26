@@ -51,20 +51,6 @@ final class SearchViewController: UIViewController {
         }
     }
 
-    private func showDetailViewController(for result: MKLocalSearchCompletion) {
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = result.title
-        let search = MKLocalSearch(request: searchRequest)
-        search.start { [weak self] response, _ in
-            guard let placemark = response?.mapItems.first?.placemark else {
-                fatalError("no city searched")
-            }
-            let viewModel = WeatherViewModel(coordinate: placemark.coordinate)
-            let weatherVC = WeatherViewController(viewModel: viewModel)
-            self?.present(weatherVC, animated: true)
-        }
-    }
-
     private func subscribeOnViewModel() {
         viewModel.$searchResults
             .receive(on: DispatchQueue.main)
@@ -82,5 +68,14 @@ final class SearchViewController: UIViewController {
         NSLayoutConstraint.pinTop(searchResultsTableView, to: searchTextField, offset: 20)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(searchResultsTableView, edgeInset: 10)
         NSLayoutConstraint.pinBottomToSuperView(searchResultsTableView)
+    }
+
+    private func showDetailViewController(for completion: MKLocalSearchCompletion) {
+        Task {
+            let coordinate = await viewModel.performSearchRequest(for: completion)
+            let viewModel = WeatherViewModel(coordinate: coordinate)
+            let weatherVC = WeatherViewController(viewModel: viewModel)
+            present(weatherVC, animated: true)
+        }
     }
 }

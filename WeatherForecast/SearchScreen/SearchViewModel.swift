@@ -26,6 +26,20 @@ final class SearchViewModel: ObservableObject {
         locationManager.setQueryFragmentForLocalSearch(query)
     }
 
+    func performSearchRequest(
+        for completion: MKLocalSearchCompletion
+    ) async -> CLLocationCoordinate2D {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = completion.title
+        let search = MKLocalSearch(request: searchRequest)
+
+        let response = try? await search.start()
+        guard let coordinate = response?.mapItems.first?.placemark.coordinate else {
+            fatalError("no city found")
+        }
+        return coordinate
+    }
+
     private func subscribeOnLocationManager() {
         locationManager.$searchResults
             .receive(on: DispatchQueue.main)
@@ -35,3 +49,5 @@ final class SearchViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 }
+
+extension MKLocalSearch.Response: @unchecked Sendable {}

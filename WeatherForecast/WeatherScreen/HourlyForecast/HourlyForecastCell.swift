@@ -46,8 +46,6 @@ final class HourlyForecastCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let service: WeatherService = WeatherServiceImpl()
-
     override func prepareForReuse() {
         super.prepareForReuse()
         timeLabel.text = nil
@@ -77,11 +75,6 @@ final class HourlyForecastCell: UICollectionViewCell {
             return stackView
         }()
 
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        NSLayoutConstraint.pinEdgesToSuperview(stack)
     }
 }

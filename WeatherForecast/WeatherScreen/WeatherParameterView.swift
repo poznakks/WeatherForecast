@@ -47,10 +47,13 @@ final class WeatherParameterView: UIView {
 
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemCyan
         layer.cornerRadius = 16
         layer.masksToBounds = true
+        setupBackground()
+    }
 
+    private func setupBackground() {
+        backgroundColor = .systemCyan
         let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = bounds

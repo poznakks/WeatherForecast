@@ -46,14 +46,7 @@ final class DailyForecastCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .systemCyan
-
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundView = blurEffectView
-
+        setupBackground()
         setupConstraints()
     }
 
@@ -84,6 +77,15 @@ final class DailyForecastCell: UITableViewCell {
             .store(in: &cancellables)
     }
 
+    private func setupBackground() {
+        backgroundColor = .systemCyan
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundView = blurEffectView
+    }
+
     private func setupConstraints() {
         let stack: UIStackView = {
             let stackView = UIStackView(
@@ -97,11 +99,6 @@ final class DailyForecastCell: UITableViewCell {
             return stackView
         }()
 
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        NSLayoutConstraint.pinEdgesToSuperview(stack)
     }
 }

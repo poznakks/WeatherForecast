@@ -33,7 +33,6 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func getLocationByCoordinate(coordinate: CLLocationCoordinate2D) async -> String {
-        print("getLocationByCoordinate", coordinate)
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let placemarks = try? await geocoder.reverseGeocodeLocation(location)
 
@@ -61,7 +60,6 @@ extension LocationManager: CLLocationManagerDelegate {
     ) {
         if let coordinate = locations.first?.coordinate {
             currentUserCoordinate = coordinate
-            print(coordinate)
         }
     }
 }

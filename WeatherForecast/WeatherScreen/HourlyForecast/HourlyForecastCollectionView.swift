@@ -30,14 +30,17 @@ final class HourlyForecastCollectionView: UICollectionView {
 
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemCyan
         layer.cornerRadius = 16
         layer.masksToBounds = true
         showsHorizontalScrollIndicator = false
         delegate = self
         dataSource = self
         register(HourlyForecastCell.self, forCellWithReuseIdentifier: HourlyForecastCell.identifier)
+        setupBackground()
+    }
 
+    private func setupBackground() {
+        backgroundColor = .systemCyan
         let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = bounds

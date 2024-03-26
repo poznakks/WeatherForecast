@@ -204,66 +204,38 @@ final class WeatherViewController: UIViewController {
         NSLayoutConstraint.pinTop(dailyForecastTableView, to: hourlyForecastCollectionView, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(dailyForecastTableView, edgeInset: 20)
 
-        let sunriseSunsetStack: UIStackView = {
-            let stack = UIStackView(arrangedSubviews: [sunriseView, sunsetView])
-            stack.axis = .horizontal
-            stack.spacing = 16
-            stack.distribution = .fillEqually
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(stack)
-            return stack
-        }()
+        let sunriseSunsetStack = makeWeatherParametersStack(from: [sunriseView, sunsetView])
 
         NSLayoutConstraint.pinTop(sunriseSunsetStack, to: dailyForecastTableView, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(sunriseSunsetStack, edgeInset: 20)
-        sunriseView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        sunsetView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        let pressureHumidityStack: UIStackView = {
-            let stack = UIStackView(arrangedSubviews: [pressureView, humidityView])
-            stack.axis = .horizontal
-            stack.spacing = 16
-            stack.distribution = .fillEqually
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(stack)
-            return stack
-        }()
+        let pressureHumidityStack = makeWeatherParametersStack(from: [pressureView, humidityView])
 
         NSLayoutConstraint.pinTop(pressureHumidityStack, to: sunriseSunsetStack, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(pressureHumidityStack, edgeInset: 20)
-        pressureView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        humidityView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        let cloudsVisibilityStack: UIStackView = {
-            let stack = UIStackView(arrangedSubviews: [cloudsView, visibilityView])
-            stack.axis = .horizontal
-            stack.spacing = 16
-            stack.distribution = .fillEqually
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(stack)
-            return stack
-        }()
+        let cloudsVisibilityStack = makeWeatherParametersStack(from: [cloudsView, visibilityView])
 
         NSLayoutConstraint.pinTop(cloudsVisibilityStack, to: pressureHumidityStack, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(cloudsVisibilityStack, edgeInset: 20)
-        cloudsView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        visibilityView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        let windStack: UIStackView = {
-            let stack = UIStackView(arrangedSubviews: [windSpeedView, windDirectionView])
-            stack.axis = .horizontal
-            stack.spacing = 16
-            stack.distribution = .fillEqually
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(stack)
-            return stack
-        }()
+        let windStack = makeWeatherParametersStack(from: [windSpeedView, windDirectionView])
 
         NSLayoutConstraint.pinTop(windStack, to: cloudsVisibilityStack, offset: 16)
         NSLayoutConstraint.pinLeadingTrailingToSuperview(windStack, edgeInset: 20)
-        windSpeedView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        windDirectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-
         NSLayoutConstraint.pinBottomToSuperView(windStack, offset: -30)
+    }
+
+    private func makeWeatherParametersStack(from views: [UIView]) -> UIStackView {
+        let stack = UIStackView(arrangedSubviews: views)
+        stack.axis = .horizontal
+        stack.spacing = 16
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(stack)
+
+        views.forEach { $0.heightAnchor.constraint(equalToConstant: 120).isActive = true }
+
+        return stack
     }
 }

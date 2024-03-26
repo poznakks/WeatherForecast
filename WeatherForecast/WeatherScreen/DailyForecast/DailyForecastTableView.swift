@@ -46,12 +46,6 @@ final class DailyForecastTableView: UITableView {
         dataSource = self
         delegate = self
         register(DailyForecastCell.self, forCellReuseIdentifier: DailyForecastCell.identifier)
-
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundView = blurEffectView
     }
 }
 

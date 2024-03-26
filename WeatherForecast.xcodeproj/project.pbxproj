@@ -122,11 +122,9 @@
 				2127F7CF2BB1CAB6004D6495 /* Networking */,
 				2127F7E52BB1CC57004D6495 /* Services */,
 				2127F7CE2BB1CA97004D6495 /* Location */,
+				2127F8172BB23EEA004D6495 /* Extensions */,
 				2127F7CA2BB1C0A1004D6495 /* Resources */,
 				2127F7CB2BB1C0AC004D6495 /* SupportingFiles */,
-				2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */,
-				2127F80F2BB21503004D6495 /* Array+prefix.swift */,
-				2127F8112BB23584004D6495 /* UIFont+design.swift */,
 			);
 			path = WeatherForecast;
 			sourceTree = "<group>";
@@ -222,14 +220,10 @@
 			isa = PBXGroup;
 			children = (
 				2127F7F32BB1CEC5004D6495 /* WeatherViewModel.swift */,
-				2127F7F72BB1D022004D6495 /* DailyForecastCell.swift */,
-				2127F7F82BB1D022004D6495 /* DailyForecastTableView.swift */,
-				2127F7F62BB1D022004D6495 /* HourlyForecastCell.swift */,
-				2127F7F92BB1D022004D6495 /* HourlyForecastCollectionView.swift */,
 				2127F7B82BB1BE73004D6495 /* WeatherViewController.swift */,
-				2127F7FE2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift */,
-				2127F8002BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift */,
 				2127F80B2BB213D7004D6495 /* WeatherParameterView.swift */,
+				2127F8152BB23EAB004D6495 /* HourlyForecast */,
+				2127F8142BB23E9B004D6495 /* DailyForecast */,
 			);
 			path = WeatherScreen;
 			sourceTree = "<group>";
@@ -243,6 +237,36 @@
 				2127F8092BB20078004D6495 /* SearchTextField.swift */,
 			);
 			path = SearchScreen;
+			sourceTree = "<group>";
+		};
+		2127F8142BB23E9B004D6495 /* DailyForecast */ = {
+			isa = PBXGroup;
+			children = (
+				2127F7F72BB1D022004D6495 /* DailyForecastCell.swift */,
+				2127F7FE2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift */,
+				2127F7F82BB1D022004D6495 /* DailyForecastTableView.swift */,
+			);
+			path = DailyForecast;
+			sourceTree = "<group>";
+		};
+		2127F8152BB23EAB004D6495 /* HourlyForecast */ = {
+			isa = PBXGroup;
+			children = (
+				2127F7F62BB1D022004D6495 /* HourlyForecastCell.swift */,
+				2127F8002BB1F9CF004D6495 /* HourlyForecastCellViewModel.swift */,
+				2127F7F92BB1D022004D6495 /* HourlyForecastCollectionView.swift */,
+			);
+			path = HourlyForecast;
+			sourceTree = "<group>";
+		};
+		2127F8172BB23EEA004D6495 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */,
+				2127F80F2BB21503004D6495 /* Array+prefix.swift */,
+				2127F8112BB23584004D6495 /* UIFont+design.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
