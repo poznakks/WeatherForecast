@@ -13,31 +13,53 @@ import MapKit
 final class SearchViewModel: ObservableObject {
 
     @Published private(set) var searchResults: [MKLocalSearchCompletion] = []
+    @Published private(set) var coordinate: CLLocationCoordinate2D?
+    @Published private(set) var errorMessage: String?
 
     private let locationManager = LocationManager()
 
+    private var task: Task<Void, Never>?
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
         subscribeOnLocationManager()
     }
 
+    deinit {
+        task?.cancel()
+    }
+
     func updateQuery(_ query: String) {
         locationManager.setQueryFragmentForLocalSearch(query)
     }
 
-    func performSearchRequest(
-        for completion: MKLocalSearchCompletion
-    ) async -> CLLocationCoordinate2D {
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = completion.title
-        let search = MKLocalSearch(request: searchRequest)
+    func resetError() {
+        errorMessage = nil
+    }
 
-        let response = try? await search.start()
-        guard let coordinate = response?.mapItems.first?.placemark.coordinate else {
-            fatalError("no city found")
+    func showWeather(for completion: MKLocalSearchCompletion) {
+        task = Task {
+            do {
+                let coordinate = try await locationManager.performSearchRequest(for: completion)
+                self.coordinate = coordinate
+            } catch {
+                handleError(error as? LocationError)
+            }
         }
-        return coordinate
+    }
+
+    private func handleError(_ error: LocationError?) {
+        switch error {
+        case .cantPerformSearch:
+            errorMessage = """
+                            Cannot perform search for selected location.
+                            Probably you have poor Internet connection. Try again.
+                            """
+        case .cantFindCoordinate:
+            errorMessage = "Cannot find coordinates for selected location."
+        default:
+            errorMessage = "Something wend wrong."
+        }
     }
 
     private func subscribeOnLocationManager() {

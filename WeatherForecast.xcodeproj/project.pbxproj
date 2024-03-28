@@ -43,6 +43,7 @@
 		2127F80E2BB214E0004D6495 /* NSLayoutContraint+pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */; };
 		2127F8102BB21503004D6495 /* Array+prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F80F2BB21503004D6495 /* Array+prefix.swift */; };
 		2127F8122BB23584004D6495 /* UIFont+design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F8112BB23584004D6495 /* UIFont+design.swift */; };
+		21B036EC2BB5A59E002C8CF1 /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B036EB2BB5A59E002C8CF1 /* UIViewController+alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutContraint+pin.swift"; sourceTree = "<group>"; };
 		2127F80F2BB21503004D6495 /* Array+prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+prefix.swift"; sourceTree = "<group>"; };
 		2127F8112BB23584004D6495 /* UIFont+design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+design.swift"; sourceTree = "<group>"; };
+		21B036EB2BB5A59E002C8CF1 /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 				2127F80D2BB214E0004D6495 /* NSLayoutContraint+pin.swift */,
 				2127F80F2BB21503004D6495 /* Array+prefix.swift */,
 				2127F8112BB23584004D6495 /* UIFont+design.swift */,
+				21B036EB2BB5A59E002C8CF1 /* UIViewController+alert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				2127F7D82BB1CB11004D6495 /* NetworkClient.swift in Sources */,
 				2127F7EB2BB1CC74004D6495 /* WeatherIconResponse.swift in Sources */,
 				2127F7E22BB1CB5D004D6495 /* NetworkResponseConverterOf.swift in Sources */,
+				21B036EC2BB5A59E002C8CF1 /* UIViewController+alert.swift in Sources */,
 				2127F7FF2BB1F3D1004D6495 /* DailyForecastCellViewModel.swift in Sources */,
 				2127F8062BB1FD5A004D6495 /* SearchViewModel.swift in Sources */,
 				2127F80E2BB214E0004D6495 /* NSLayoutContraint+pin.swift in Sources */,

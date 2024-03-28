@@ -112,6 +112,7 @@ final class WeatherViewController: UIViewController {
     private func subscribeOnViewModel() {
         viewModel.$city
             .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
             .sink { [weak self] city in
                 self?.cityLabel.text = city
             }
@@ -119,8 +120,19 @@ final class WeatherViewController: UIViewController {
 
         viewModel.$weatherInfo
             .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
             .sink { [weak self] weatherInfo in
                 self?.updateWithWeatherInfo(weatherInfo)
+            }
+            .store(in: &cancellables)
+
+        viewModel.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .sink { [weak self] errorMessage in
+                self?.showAlert(errorMessage) { _ in
+                    self?.viewModel.resetError()
+                }
             }
             .store(in: &cancellables)
     }

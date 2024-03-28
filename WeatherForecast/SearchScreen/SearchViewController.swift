@@ -7,7 +7,7 @@
 
 import UIKit
 import Combine
-import MapKit
+import CoreLocation
 
 final class SearchViewController: UIViewController {
 
@@ -47,7 +47,7 @@ final class SearchViewController: UIViewController {
         }
 
         searchResultsTableView.onCellTapHandler = { [weak self] result in
-            self?.showDetailViewController(for: result)
+            self?.viewModel.showWeather(for: result)
         }
     }
 
@@ -56,6 +56,24 @@ final class SearchViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] results in
                 self?.searchResultsTableView.setResults(results)
+            }
+            .store(in: &cancellables)
+
+        viewModel.$coordinate
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .sink { [weak self] coordinate in
+                self?.showWeatherViewController(for: coordinate)
+            }
+            .store(in: &cancellables)
+
+        viewModel.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .sink { [weak self] errorMessage in
+                self?.showAlert(errorMessage) { _ in
+                    self?.viewModel.resetError()
+                }
             }
             .store(in: &cancellables)
     }
@@ -70,12 +88,9 @@ final class SearchViewController: UIViewController {
         NSLayoutConstraint.pinBottomToSuperView(searchResultsTableView)
     }
 
-    private func showDetailViewController(for completion: MKLocalSearchCompletion) {
-        Task {
-            let coordinate = await viewModel.performSearchRequest(for: completion)
-            let viewModel = WeatherViewModel(coordinate: coordinate)
-            let weatherVC = WeatherViewController(viewModel: viewModel)
-            present(weatherVC, animated: true)
-        }
+    private func showWeatherViewController(for coordinate: CLLocationCoordinate2D) {
+        let viewModel = WeatherViewModel(coordinate: coordinate)
+        let weatherVC = WeatherViewController(viewModel: viewModel)
+        present(weatherVC, animated: true)
     }
 }
